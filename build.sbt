@@ -8,7 +8,7 @@ lazy val library = new {
   object Version {
     val akka = "2.6.1"
     val akkaHttp = "10.1.11"
-    val flyway = "6.2.2"
+    val flyway = "3.2.1"
     val scalaTest = "3.1.0"
     val logbackVersion = "1.2.3"
     val slick = "3.3.2"
