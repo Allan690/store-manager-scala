@@ -12,11 +12,14 @@ lazy val library = new {
     val scalaTest = "3.1.0"
     val logbackVersion = "1.2.3"
     val slick = "3.3.2"
+    val circeVersion = "0.12.3"
+    val akkaHttpCirce = "1.30.0"
   }
 
   val logBack: ModuleID = "ch.qos.logback" % "logback-classic" % Version.logbackVersion
   val flyway: ModuleID = "org.flywaydb" % "flyway-core" % Version.flyway
   val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % Version.scalaTest
+  val akkaHttpCirce: ModuleID = "de.heikoseeberger" %% "akka-http-circe" % Version.akkaHttpCirce
 
   lazy val akka: Seq[ModuleID] = Seq(
     "com.typesafe.akka" %% "akka-actor" % Version.akka,
@@ -37,6 +40,12 @@ lazy val library = new {
     "org.postgresql" % "postgresql" % "9.4.1211",
     "com.h2database" % "h2" % "1.4.192" % "test"
   )
+
+  val circe: Seq[ModuleID] = Seq(
+    "io.circe" %% "circe-core" % Version.circeVersion,
+    "io.circe" %% "circe-generic" % Version.circeVersion,
+    "io.circe" %% "circe-parser" % Version.circeVersion,
+  )
 }
 
 // *****************************************************************************
@@ -50,28 +59,7 @@ lazy val projectSettings =
     scalaVersion := "2.13.1",
     organization := "net.storemanager",
     version := "0.1",
-    organizationName := "Allan Mogusu",
-    startYear := Some(2020),
-    licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
-    javacOptions ++= Seq("-source", "1.8"),
-    scalacOptions ++= Seq(
-      "-deprecation",
-      "-encoding",
-      "UTF-8",
-      "-feature",
-      "-unchecked",
-      "-Ywarn-numeric-widen",
-      "-Ywarn-value-discard",
-      "-Xfatal-warnings",
-      "-Yno-adapted-args",
-      "-Xfuture"
-    ),
-    sources in (Compile, doc) := Seq.empty,
-    scalastyleFailOnError := true,
-    coverageEnabled in Test := true,
-    coverageMinimum in Test := 80,
-    coverageFailOnMinimum in Test := false,
-    coverageHighlighting in Test := true
+    organizationName := "Allan Mogusu"
   )
 
 // *****************************************************************************
@@ -82,8 +70,8 @@ lazy val `StoreManager-scala` = (project in file("storemanager"))
   .enablePlugins(JavaAppPackaging)
   .settings(settings)
   .settings(
-    libraryDependencies ++= library.akka ++ library.akkaHttp ++ library.slick ++
-      Seq(library.flyway, library.logBack, library.scalaTest % Test),
+    libraryDependencies ++= library.akka ++ library.akkaHttp ++ library.slick ++ library.circe ++
+      Seq(library.flyway, library.logBack, library.akkaHttpCirce, library.scalaTest % Test),
     logBuffered := false
   )
 

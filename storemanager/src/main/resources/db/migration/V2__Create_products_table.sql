@@ -29,6 +29,6 @@ alter table products_sales_user drop constraint if exists user_product_sales_fk;
 alter table products_sales_user
     add constraint products_sales_user_fk foreign key (product_id) references products (id) on update restrict on delete cascade;
 alter table products_sales_user
-    add constraint sales_product_user_fk foreign key (sales_id)references sales (id) on update restrict on delete cascade;
+    add constraint sales_product_user_fk foreign key (sales_id) references sales (id) on update restrict on delete cascade;
 alter table products_sales_user
-    add constraint user_product_sales_fk foreign key (users_id)references users (id) on update restrict on delete cascade;
+    add constraint user_product_sales_fk foreign key (users_id) references users (id) on update restrict on delete cascade;

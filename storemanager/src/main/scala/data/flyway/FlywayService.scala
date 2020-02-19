@@ -1,7 +1,9 @@
 package data.flyway
+
 import config.StoreManagerConfig
-import scala.util.Try
 import org.flywaydb.core.Flyway
+
+import scala.util.Try
 
 
 class FlywayService(jdbcUrl: String, dbUser: String, dbPassword: String) {
@@ -9,7 +11,7 @@ class FlywayService(jdbcUrl: String, dbUser: String, dbPassword: String) {
   flyway.setDataSource(jdbcUrl, dbUser, dbPassword)
 
 
-  def migrateDatabaseSchema(): Int = Try ( flyway.migrate()).getOrElse {
+  def migrateDatabaseSchema(): Int = Try (flyway.migrate()).getOrElse {
     flyway.repair()
     flyway.migrate()
   }
@@ -21,4 +23,3 @@ trait FlywayIntegration extends StoreManagerConfig {
   val flywayService = new FlywayService(jdbcUrl, dbUser, dbPassword)
   flywayService.migrateDatabaseSchema()
 }
-
